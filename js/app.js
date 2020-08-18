@@ -38,19 +38,17 @@ const navBuilder = function() {
         const sectionID = item.id;
         const sectionDataNav = item.dataset.nav;
 
-        navigationMenu += `<li><a class = 'menu__link' id = 'link${count}' href='#${sectionID}'>${sectionDataNav}</a></li>`;
+        navigationMenu += `<li><a class = 'menu__link' href='#${sectionID}'>${sectionDataNav}</a></li>`;
         count += 1;
     }
 
     navigationBar.innerHTML = navigationMenu;
 }
 
-// This function scrollIntoView event
-
 // This function adds the smooth scroll feature
-const navigationLinks = document.getElementsByClassName('menu__link');
 
 const scrollHandler = function() {
+    const navigationLinks = document.getElementsByClassName('menu__link');
     for (let navLink of navigationLinks){
         navLink.addEventListener('click', function(event){
             event.preventDefault();
@@ -60,17 +58,17 @@ const scrollHandler = function() {
     }
 }
 
-// Add class 'active' to button when pressed
 
 // Add class 'active' to section while scrolling
 const setSectionAsActive = function() {
     window.addEventListener('scroll', function (event) {
         let section = getActiveSection();
-        //Added an empty statement for dead space that won't be highlihgted by the JS
+        //Added an empty statement for dead space to remove errors in console
         if(section === undefined){
             ;
         }
-        else{//sets one section as active and removes active from other sections where applicable
+        //sets one section as active and removes active from other sections where applicable
+        else{
             section.classList.add('your-active-class');
             for (let item of sections) {
                 if (item.id != section.id && item.classList.contains('your-active-class')) {
@@ -78,23 +76,21 @@ const setSectionAsActive = function() {
                 }
 
             }
+
+            // Add Active Class to Button with scroll; compare the navLink href to the relevant attributes of the section
+            const navigationLinks = document.getElementsByClassName('menu__link');
+            let sectionRef = `${section.baseURI}#${section.id}`;
+            for (let navLink of navigationLinks){
+                if(navLink.href === sectionRef){
+                    navLink.classList.add('active');
+                }
+                else{
+                    navLink.classList.remove('active');
+                }
+            }
         }
     });
 };
-
-
-
-        // // set corresponding header style
-        // const active = document.querySelector('li[data-nav="' + section.id + '"]');
-        // active.classList.add('active__link');
-        // // remove from other headers
-        // const headers = document.querySelectorAll('.menu__link');
-        // for (let item of headers) {
-        //     console.log(item);
-        //     if (item.dataset.nav != active.dataset.nav & item.classList.contains('active__link')) {
-        //         item.classList.remove('active__link');
-        //     }
-        // };
 
 // End Main Functions
 // Begin Events 
