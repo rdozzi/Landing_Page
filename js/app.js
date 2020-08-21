@@ -32,14 +32,12 @@ const getActiveSection = function() {
 const navBuilder = function() {
 
     let navigationMenu = '';
-    let count = 1;
 
     for(let item of sections){
         const sectionID = item.id;
         const sectionDataNav = item.dataset.nav;
 
         navigationMenu += `<li><a class = 'menu__link' href='#${sectionID}'>${sectionDataNav}</a></li>`;
-        count += 1;
     }
 
     navigationBar.innerHTML = navigationMenu;
