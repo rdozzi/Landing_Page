@@ -19,18 +19,37 @@ const getActiveSection = function() {
 
     for(let section of sections){
         const sectionBounding = section.getBoundingClientRect();
-        if (sectionBounding.top >= -500 && sectionBounding.bottom <= (window.innerHeight || document.documentElement.clientHeight)){
-            return section;
+        if(window.innerwidth >= 550){
+            if (sectionBounding.top >= -500 &&
+                sectionBounding.left >= 0 &&
+                sectionBounding.bottom - 50 <= (window.innerHeight || document.documentElement.clientHeight) &&
+                sectionBounding.right <= (window.innerWidth || document.documentElement.clientHeight)){
+                return section;
+            }
+        }else if (window.innerWidth >= 400 && window.innerWidth < 550){
+            if(sectionBounding.top >= -350 &&
+                sectionBounding.left >= 0 &&
+                sectionBounding.bottom - 310 <= (window.innerHeight || document.documentElement.clientHeight) &&
+                sectionBounding.right <= (window.innerWidth || document.documentElement.clientHeight)){
+                return section;
+            }
+        }else{
+            if(sectionBounding.top >= -200 &&
+                sectionBounding.left >= 0 &&
+                sectionBounding.bottom - 550 <= (window.innerHeight || document.documentElement.clientHeight) &&
+                sectionBounding.right <= (window.innerWidth || document.documentElement.clientHeight)){
+                return section;
+            }
         }
     }
+    
 }
 
 // End Helper Functions
 // Begin Main Functions
 
 // This function builds the navigator bar based on the sections present
-const navBuilder = function() {
-
+const navBuilder = function() {    
     let navigationMenu = '';
 
     for(let item of sections){
@@ -44,7 +63,6 @@ const navBuilder = function() {
 }
 
 // This function adds the smooth scroll feature
-
 const scrollHandler = function() {
     const navigationLinks = document.getElementsByClassName('menu__link');
     for (let navLink of navigationLinks){
@@ -55,7 +73,6 @@ const scrollHandler = function() {
         });
     }
 }
-
 
 // Add class 'active' to section while scrolling
 const setSectionAsActive = function() {
@@ -95,6 +112,7 @@ const setSectionAsActive = function() {
 
 // Build menu 
 navBuilder();
+
 
 // Scroll to section on link click
 scrollHandler();
