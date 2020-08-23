@@ -10,6 +10,7 @@
 
 const navigationBar = document.getElementById('navbar__list');
 const sections = document.querySelectorAll('section');
+const navigationLinks = document.getElementsByClassName('menu__link');
 
 // End Global Variables
 // Start Helper Functions
@@ -46,14 +47,17 @@ const getActiveSection = function() {
     
 }
 
+// Function that executes when the "Return to Top" button is pushed
 const goToTop = function (){
     window.scrollTo({
         left: 0,
         top: 0,
         behavior: 'smooth'
     });
+    
 }
 
+// Function that controls the button's appearance to appear after a specified number of pixels
 const scrollFunction = function() {
     button = document.getElementById('myButton');
 
@@ -71,9 +75,9 @@ const scrollFunction = function() {
 const navBuilder = function() {    
     let navigationMenu = '';
 
-    for(let item of sections){
-        const sectionID = item.id;
-        const sectionDataNav = item.dataset.nav;
+    for(let section of sections){
+        const sectionID = section.id;
+        const sectionDataNav = section.dataset.nav;
 
         navigationMenu += `<li><a class = 'menu__link' href='#${sectionID}'>${sectionDataNav}</a></li>`;
     }
@@ -83,7 +87,6 @@ const navBuilder = function() {
 
 // This function adds the smooth scroll feature
 const scrollHandler = function() {
-    const navigationLinks = document.getElementsByClassName('menu__link');
     for (let navLink of navigationLinks){
         navLink.addEventListener('click', function(event){
             event.preventDefault();
@@ -101,7 +104,7 @@ const setSectionAsActive = function() {
         if(section === undefined){
             ;
         }
-        //sets one section as active and removes active from other sections where applicable
+        //Sets one section as active and removes active from other sections where applicable
         else{
             section.classList.add('your-active-class');
             for (let item of sections) {
@@ -111,8 +114,7 @@ const setSectionAsActive = function() {
 
             }
 
-            // Add Active Class to Button with scroll; compare the navLink href to the relevant attributes of the section
-            const navigationLinks = document.getElementsByClassName('menu__link');
+        // Add Active Class to Button with scroll; compare the navLink href to the relevant attributes of the section
             let sectionRef = `${section.baseURI}#${section.id}`;
             for (let navLink of navigationLinks){
                 if(navLink.href === sectionRef){
@@ -126,14 +128,17 @@ const setSectionAsActive = function() {
     });
 };
 
+// Main function for generating the navigation button in the top right-hand corner
 const generateButton = function () {
     let button = document.createElement('Button');
+    window.onscroll = function() {scrollFunction()}
+
     button.innerHTML = 'Return to Top';
     button.setAttribute('id','myButton');
     button.setAttribute('onclick','goToTop()');
-    button.style ='top:21px;right:1%;position:fixed;z-index:6;border-radius:6px;\
-    font-family:Merriweather,serif;font-size:15px;'
-    window.onscroll = function() {scrollFunction()}
+    button.style='top:16px;right:1%;position:fixed;z-index:6;border-radius:6px;\
+    font-family:Merriweather,serif;font-size:15px;display:none';
+
     document.body.appendChild(button);
 }
 
