@@ -14,7 +14,8 @@ const sections = document.querySelectorAll('section');
 // End Global Variables
 // Start Helper Functions
 
-// This function provides the criteria for the active section
+// This function provides the criteria for the active section. The if statements are desitned to accommodate
+// different window widths
 const getActiveSection = function() {
 
     for(let section of sections){
@@ -43,6 +44,24 @@ const getActiveSection = function() {
         }
     }
     
+}
+
+const goToTop = function (){
+    window.scrollTo({
+        left: 0,
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+const scrollFunction = function() {
+    button = document.getElementById('myButton');
+
+    if(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50){
+        button.style.display = 'block';
+    }else{
+        button.style.display = 'none';
+    }
 }
 
 // End Helper Functions
@@ -107,12 +126,22 @@ const setSectionAsActive = function() {
     });
 };
 
+const generateButton = function () {
+    let button = document.createElement('Button');
+    button.innerHTML = 'Return to Top';
+    button.setAttribute('id','myButton');
+    button.setAttribute('onclick','goToTop()');
+    button.style ='top:21px;right:1%;position:fixed;z-index:6;border-radius:6px;\
+    font-family:Merriweather,serif;font-size:15px;'
+    window.onscroll = function() {scrollFunction()}
+    document.body.appendChild(button);
+}
+
 // End Main Functions
 // Begin Events 
 
 // Build menu 
 navBuilder();
-
 
 // Scroll to section on link click
 scrollHandler();
@@ -120,4 +149,5 @@ scrollHandler();
 // Set sections as active
 setSectionAsActive();
 
-
+// Generates the "Return to Top" button
+generateButton();
